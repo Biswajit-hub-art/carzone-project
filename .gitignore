@@ -156,6 +156,7 @@ Thumbs.db #thumbnail cache on Windows
 .prof
 
 /media
+static/img
 
 
 # End of https://www.toptal.com/developers/gitignore/api/django
