@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+LOGIN_REDIRECT_URL= 'dashboard'
 
 INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
@@ -43,7 +44,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',
     'django.contrib.humanize',
+
+    #adding after allauth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    #providers
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -146,3 +159,5 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+SITE_ID=1
