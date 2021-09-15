@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Team
 from cars.models import Car
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
 
 # Create your views here.
 def home(request):
@@ -44,4 +47,29 @@ def contact(request):
     context={
         'contact_active':"active",
     }
+
+    if request.method=='POST':
+        name = request.POST['name']
+        email =  request.POST['email']
+        subject =  request.POST['subject']
+        phone = request.POST['phone']
+        message = request.POST['message']
+
+        mail_subject = 'You have a message regarding the wheeler website '+ subject
+        message_body = 'Name:' + name + ', email:' + email + ', Phone:' +phone
+
+        admin_info = User.objects.get(is_superuser=True)
+        admin_email=admin_info.email
+
+        send_mail(
+                mail_subject,
+                message_body,
+                'sahoob193@gmail.com',
+                [admin_email],
+                fail_silently=False,
+                )
+
+        messages.success(request, 'ThankYou for contacting us!')
+        return redirect('contact')
+
     return render(request, 'pages/contact.html', context)
